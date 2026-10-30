@@ -55,3 +55,44 @@ Hinter einem lokalen Reverse-Proxy (z. B. Nginx, Caddy, Traefik, Pangolin) läss
 HOST_BIND=127.0.0.1:3000 docker compose up -d --build
 ```
 
+## Transparenzhinweis zum KI-Einsatz (AI Full Disclosure)
+
+- **KI-gestützte Softwareentwicklung (Vibe Coding):** Konzeptionelle Ausarbeitung, Anwendungslogik (Frontend, Backend-Proxy, astronomische und meteorologische Berechnungen, automatisierte Tests), Containerisierung (`Dockerfile`, `docker-compose.yml`) sowie Projektdokumentation wurden maßgeblich mithilfe großer Sprachmodelle (LLMs) im Rahmen eines iterativen KI-gestützten Entwicklungsprozesses erstellt.
+- **Menschliche Steuerung & Qualitätskontrolle:** Architekturentscheidungen, fachliche Anforderungen, Sicherheitsvorgaben (Container-Härtung, Input-Validierung), Code-Reviews, Funktionstests sowie Deployment und Freigabe erfolgten durchgehend unter menschlicher Kontrolle und Verantwortung.
+- **Kein KI-Einsatz zur Laufzeit (Zero Runtime AI):** Die produktive Anwendung enthält **keinerlei** KI-Modelle, Chatbots oder LLM-Schnittstellen. Zur Laufzeit werden ausschließlich deterministische Algorithmen ausgeführt und öffentliche Wetter- bzw. Geodaten-Schnittstellen abgefragt. Es werden zu keinem Zeitpunkt Nutzer- oder Standortdaten an KI-Dienste übertragen.
+
+## Rechtliche Hinweise, Datenlizenzen & Haftungsausschluss
+
+### 1. Inoffizielles Projekt & Markenhinweis
+Dieses Repository ist ein unabhängiges, privates Open-Source-Projekt und steht in **keinerlei organisatorischer, wirtschaftlicher oder amtlicher Verbindung zum Deutschen Wetterdienst (DWD)** oder anderen genannten Institutionen. „WarnWetter“ ist eine geschützte Bezeichnung des Deutschen Wetterdienstes; die Bezugnahme erfolgt ausschließlich beschreibend zur Einordnung der visualisierten offenen DWD-Datenbestände.
+
+### 2. Haftungsausschluss bei Unwetter- & Gefahrenlagen
+Alle dargestellten Messwerte, Vorhersagen, Radarbilder und Unwetterwarnungen werden automatisiert über externe Schnittstellen abgerufen, zwischengespeichert und grafisch aufbereitet. Es wird **keinerlei Gewähr für Richtigkeit, Vollständigkeit, Aktualität oder ständige Verfügbarkeit** übernommen. Verzögerungen, Darstellungsfehler oder Schnittstellenausfälle können jederzeit auftreten.
+
+> **Wichtiger Warnhinweis:** Diese Webanwendung ersetzt im Gefahren- oder Katastrophenfall **keine** offiziellen behördlichen Warnkanäle (wie die offizielle DWD-WarnWetter-App, NINA, Katwarn oder Rundfunkdurchsagen). Entscheidungen zum Schutz von Leben, Gesundheit und Sachwerten dürfen niemals allein auf Grundlage dieser Anwendung getroffen werden.
+
+### 3. Datenquellen & Nutzungsbedingungen Dritter
+Die MIT-Lizenz dieses Projekts gilt ausschließlich für den **Quellcode der Software**, nicht für die zur Laufzeit bezogenen Wetter-, Radar- und Geodaten. Beim Betrieb einer eigenen Instanz sind die jeweiligen Lizenzbedingungen der Datenanbieter einzuhalten:
+
+- **Deutscher Wetterdienst (DWD Open Data & GeoServer WMS):**
+  - *Umfang:* SYNOP-Stationsmeldungen, MOSMIX-Vorhersagen, amtliche CAP-Gemeindewarnungen, RV-Radarkomposit (`1×1 km`), Blitzdichte, Gewittercluster und NowCastELEC.
+  - *Lizenz & Pflichtangabe:* Bereitgestellt gemäß § 7 DWD-Gesetz (DWDG) i. V. m. der Geodatennutzungsverordnung (GeoNutzV) sowie den [DWD Open-Data-Nutzungsbedingungen](https://www.dwd.de/DE/service/copyright/copyright_node.html) (*Quelle: Deutscher Wetterdienst*).
+  - *Verarbeitungshinweis gemäß DWD-Vorgaben:* Die Originaldaten des DWD werden durch diese Software zeitlich zusammengeführt, räumlich interpoliert und grafisch neu dargestellt.
+- **Bundesamt für Kartographie und Geodäsie (BKG – TopPlusOpen):**
+  - *Umfang:* Amtliche Web-Basiskarte (`sgx.geodatenzentrum.de`, Layer `web_grau`).
+  - *Lizenz & Pflichtangabe:* `© GeoBasis-DE / BKG`, lizenziert unter der [Datenlizenz Deutschland – Namensnennung – Version 2.0 (`dl-de/by-2-0`)](https://www.govdata.de/dl-de/by-2-0).
+- **Bright Sky API (`api.brightsky.dev`):**
+  - *Umfang:* Öffentliches JSON-Gateway zur Aufbereitung von DWD Open Data ([Quellcode unter MIT-Lizenz](https://github.com/jdemaeyer/brightsky)). Bei dauerhaft hohem Abfrageaufkommen sollten die Fair-Use-Regeln des Dienstes beachtet oder eine eigene Bright-Sky-Instanz betrieben werden.
+- **Open-Meteo (`open-meteo.com`):**
+  - *Umfang:* Ortssuche (`geocoding-api.open-meteo.com`) sowie das DWD-ICON-D2-Bewölkungsgitter (`api.open-meteo.com/v1/dwd-icon`).
+  - *Lizenz & Einschränkung für kommerzielle Nutzung:* Daten bereitgestellt durch [Open-Meteo.com](https://open-meteo.com/) unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Gemäß den [Open-Meteo Nutzungsbedingungen](https://open-meteo.com/en/terms) ist der kostenfreie öffentliche API-Endpunkt **ausschließlich für die nicht-kommerzielle Nutzung** zugelassen. Für jeglichen kommerziellen Betrieb (z. B. gewerbliche Websites, werbefinanzierte Angebote oder interne Unternehmensnutzung) muss ein kostenpflichtiger API-Zugang bei Open-Meteo erworben und über `DWD_ICON_BASE_URL` / `GEOCODING_BASE_URL` hinterlegt werden.
+
+### 4. Datenschutz-Hinweis für Betreiber (Self-Hosting / DSGVO)
+- **Kein Tracking & keine Cookies:** Die Anwendung bindet keinerlei Analyse-, Werbe- oder Tracking-Dienste ein und setzt keine Cookies. Favoriten und Darstellungsoptionen verbleiben lokal im Browser (`localStorage`); die GPS-Standortbestimmung erfolgt ausschließlich lokal nach expliziter Browser-Freigabe.
+- **Serverseitige Proxy-Bündelung:** Abrufe von Wetter-, Radar-, Wolken- und Ortsdaten (`/api/*`) erfolgen über das eigene Node.js-Backend, sodass gegenüber Bright Sky und Open-Meteo lediglich die IP-Adresse des Host-Servers auftritt.
+- **Direkte Kartenkachel-Abrufe im Browser:** Beim Anzeigen der interaktiven Karte lädt der Browser der Besucher WMS- und WMTS-Grafikkacheln direkt von den Servern des **DWD (`maps.dwd.de`)** sowie des **BKG (`sgx.geodatenzentrum.de`)**. Hierbei wird technisch bedingt die IP-Adresse des aufrufenden Endgeräts an diese öffentlichen Behördenserver übermittelt. Bei öffentlichem Betrieb im Geltungsbereich der DSGVO sollte dies in der eigenen Datenschutzerklärung berücksichtigt und ein Impressum verlinkt werden.
+
+## Lizenz des Quellcodes
+
+Der Quellcode dieser Anwendung ist unter der **MIT-Lizenz** veröffentlicht – siehe [LICENSE](./LICENSE). Alle Rechte an den abgerufenen Fach-, Wetter- und Kartendaten verbleiben bei den oben genannten Urhebern und Datenanbietern.
+

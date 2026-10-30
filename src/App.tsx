@@ -405,12 +405,49 @@ export default function App() {
       </main>
 
       <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-5 px-4 sm:px-6">
-        <div className="max-w-[1360px] mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+        <div className="max-w-[1360px] mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
           <p>
-            Datenquelle: Deutscher Wetterdienst (DWD Open Data – SYNOP, MOSMIX, CAP &amp; RV-Radar),
-            Bright Sky API, DWD GeoServer WMS &amp; BKG TopPlusOpen (dl-de/by-2-0).
+            Quelle:{' '}
+            <a
+              href="https://www.dwd.de/DE/service/copyright/copyright_node.html"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-slate-700 dark:hover:text-slate-200"
+            >
+              Deutscher Wetterdienst
+            </a>{' '}
+            (DWD Open Data, grafisch aufbereitet),{' '}
+            <a
+              href="https://brightsky.dev/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-slate-700 dark:hover:text-slate-200"
+            >
+              Bright Sky API
+            </a>
+            , © GeoBasis-DE / BKG (
+            <a
+              href="https://www.govdata.de/dl-de/by-2-0"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-slate-700 dark:hover:text-slate-200"
+            >
+              dl-de/by-2-0
+            </a>
+            ) &amp;{' '}
+            <a
+              href="https://open-meteo.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-slate-700 dark:hover:text-slate-200"
+            >
+              Open-Meteo.com
+            </a>{' '}
+            (CC BY 4.0, nicht-kommerziell).
           </p>
-          <p>Unverbindliche Visualisierung · Im Gefahrenfall amtliche Hinweise vor Ort beachten.</p>
+          <p>
+            Inoffizielles Open-Source-Projekt ohne Verbindung zum DWD · Keine Gewähr · Im Gefahrenfall offizielle Warnkanäle beachten.
+          </p>
         </div>
       </footer>
 
