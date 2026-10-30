@@ -43,7 +43,7 @@ npm run build
 
 ## Self-Hosting mit Docker Compose
 
-Startet die Anwendung als gehärteten Einzel-Container (`node:22-alpine`, Non-Root, Read-Only-Dateisystem, 256 MB RAM-Limit) auf Port `3000`:
+Startet die Anwendung als gehärteten Einzel-Container (`node:22-slim`, Non-Root, Read-Only-Dateisystem, 256 MB RAM-Limit) auf Port `3000`:
 
 ```bash
 docker compose up -d --build
