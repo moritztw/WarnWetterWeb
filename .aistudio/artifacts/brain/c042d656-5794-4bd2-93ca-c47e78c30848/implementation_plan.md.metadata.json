@@ -1,0 +1,6 @@
+{
+  "summary":  "Architektur- und Designplan für WarnWetter Web: Interaktive DWD-Wetter- und Unwetter-Webapp auf Basis der Bright Sky API, Open-Meteo Geocoding und DWD GeoServer WMS (Warnkarte & Niederschlagsradar) im sachlichen Zivilschutz-Design mit Dark/Light-Mode.",
+  "updatedAt":  "2026-10-30T07:59:02.870130341Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

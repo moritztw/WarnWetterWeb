@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+.aistudio
+.env
+.env.*
+!.env.example
+*.log
+tests
+README.md
+public/assets/aistudio

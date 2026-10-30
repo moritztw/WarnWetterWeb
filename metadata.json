@@ -1,0 +1,6 @@
+{
+  "name": "WarnWetter Web",
+  "description": "Interaktive DWD-Wetter- und Unwetter-Webanwendung mit amtlichen Warnungen, Stationsmesswerten, 48h-Meteogramm, Deutschland-Warnkarte und Niederschlagsradar.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
