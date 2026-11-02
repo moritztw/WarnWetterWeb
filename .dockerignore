@@ -8,5 +8,7 @@ dist
 !.env.example
 *.log
 tests
+scripts
 README.md
+LICENSE
 public/assets/aistudio

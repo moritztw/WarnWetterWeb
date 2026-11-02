@@ -55,6 +55,65 @@ Hinter einem lokalen Reverse-Proxy (z. B. Nginx, Caddy, Traefik, Pangolin) läss
 HOST_BIND=127.0.0.1:3000 docker compose up -d --build
 ```
 
+## Self-Hosting auf Proxmox VE (Nativer LXC-Container ohne Docker)
+
+Für Proxmox VE steht unter [`scripts/proxmox-lxc.sh`](./scripts/proxmox-lxc.sh) ein Skript bereit, das direkt auf der **Proxmox-Host-Shell** einen unprivilegierten, ressourcensparenden Debian-12-LXC-Container anlegt und die Anwendung **nativ ohne Docker-Zwischenschicht** mit Node.js 22 LTS und gehärtetem `systemd`-Dienst (`warnwetter.service`) einrichtet (~60–90 MB RAM-Bedarf im laufenden Betrieb).
+
+### Schnellstart mit Standardwerten (DHCP, 1 vCPU, 512 MB RAM, 3 GB Disk)
+
+Direkt auf der **Proxmox-VE-Shell** als `root` ausführen:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/moritztw/WarnWetterWeb/main/scripts/proxmox-lxc.sh)"
+```
+
+*(Alternativ zur Vorab-Prüfung erst herunterladen: `curl -fsSLO https://raw.githubusercontent.com/moritztw/WarnWetterWeb/main/scripts/proxmox-lxc.sh && less proxmox-lxc.sh && bash proxmox-lxc.sh`)*
+
+### Angepasste Bereitstellung (z. B. feste IP, ZFS-Storage, Wunsch-CTID)
+
+Alle Eckdaten lassen sich ohne Änderung am Skript über Umgebungsvariablen übergeben:
+
+```bash
+CTID=240 \
+CT_HOSTNAME=warnwetter \
+STORAGE=local-zfs \
+IP=192.168.178.90/24 \
+GW=192.168.178.1 \
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/moritztw/WarnWetterWeb/main/scripts/proxmox-lxc.sh)"
+```
+
+| Variable | Standardwert | Beschreibung |
+| :--- | :--- | :--- |
+| `CTID` | *nächste freie ID* | Numerische Proxmox-Container-ID (`>= 100`) |
+| `CT_HOSTNAME` | `warnwetter` | Hostname des LXC-Containers |
+| `STORAGE` | `local-lvm` | Ziel-Storage für das Container-Root-Dateisystem (z. B. `local-lvm`, `local-zfs`) |
+| `TEMPLATE_STORAGE` | `local` | Storage für das Debian-12-CT-Template (`vztmpl`) |
+| `DISK_SIZE` | `3` | Festplattengröße in GB |
+| `CORES` | `1` | Anzahl der zugewiesenen CPU-Kerne |
+| `MEMORY` | `512` | Arbeitsspeicher in MB (deckt den initialen `vite build` sicher ab) |
+| `SWAP` | `0` | Swap-Größe in MB |
+| `BRIDGE` | `vmbr0` | Proxmox-Netzwerkbrücke |
+| `IP` | `dhcp` | `dhcp` oder statische IPv4 in CIDR-Notation (z. B. `192.168.178.90/24`) |
+| `GW` | *(leer)* | IPv4-Gateway bei statischer IP-Vergabe |
+| `VLAN` | *(leer)* | Optionales VLAN-Tag |
+| `TZ_NAME` | `Europe/Berlin` | Zeitzone des Containers |
+
+### Betrieb, Konfiguration & Updates des LXC-Containers
+
+Nach Abschluss ist die Anwendung unter `http://<Container-IP>:3000` erreichbar. Wichtige Verwaltungsbefehle von der Proxmox-Host-Shell (Beispiel `CTID=240`):
+
+```bash
+# Anwendung per Git-Pull + Neubau + Neustart aktualisieren
+pct exec 240 -- warnwetter-update
+
+# Live-Logs des systemd-Dienstes einsehen
+pct exec 240 -- journalctl -u warnwetter -f
+
+# Umgebungsvariablen anpassen und Dienst neu starten
+pct exec 240 -- nano /etc/warnwetter.env
+pct exec 240 -- systemctl restart warnwetter
+```
+
 ## Transparenzhinweis zum KI-Einsatz (AI Full Disclosure)
 
 - **KI-gestützte Softwareentwicklung (Vibe Coding):** Konzeptionelle Ausarbeitung, Anwendungslogik (Frontend, Backend-Proxy, astronomische und meteorologische Berechnungen, automatisierte Tests), Containerisierung (`Dockerfile`, `docker-compose.yml`) sowie Projektdokumentation wurden maßgeblich mithilfe großer Sprachmodelle (LLMs) im Rahmen eines iterativen KI-gestützten Entwicklungsprozesses erstellt.
